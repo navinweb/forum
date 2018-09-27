@@ -8,6 +8,7 @@
                     <div class="card-header">{{ $thread->title }}</div>
                     <div class="card-body">
                         <article>
+                            <a href="{{$thread->creator->id}}">{{ $thread->creator->name }}</a> posted:
                             <div class="body">{{ $thread->body }}</div>
                         </article>
                     </div>
@@ -18,16 +19,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 @foreach($thread->replies as $reply)
-                    <div class="card">
-                        <div class="card-header">
-                            <a href="{{ $reply->owner->id }}">{{ $reply->owner->name }}</a> said {{ $reply->created_at->diffForHumans() }}...
-                        </div>
-                        <div class="card-body">
-                            <article>
-                                <div class="body">{{ $reply->body }}</div>
-                            </article>
-                        </div>
-                    </div>
+                    @include('threads.reply')
                 @endforeach
             </div>
         </div>
