@@ -23,7 +23,7 @@ class CreateThreadsTest extends TestCase {
 	public function an_authenticated_user_can_create_new_forum_thread() {
 		$this->signIn();
 
-		$thread = make( 'App\Thread' );
+		$thread = create( 'App\Thread' );
 
 		$this->post( '/threads', $thread->toArray() );
 

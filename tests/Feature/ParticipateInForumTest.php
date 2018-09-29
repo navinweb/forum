@@ -14,9 +14,9 @@ class ParticipateInForumTest extends TestCase
 	{
 		$this->expectException( 'Illuminate\Auth\AuthenticationException' );
 
-		create( 'App\Thread' );
+		$thread = create( 'App\Thread' );
 
-		$this->post( '/threads/1/replies', [] );
+		$this->post( "/threads/{$thread->channel->slug}/{$thread->id}/replies", [] );
 	}
 
 	/** @test */
