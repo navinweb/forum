@@ -34,11 +34,22 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/threads">Threads</a>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Browse</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="/threads">Threads</a>
+                                @if (auth()->check())
+                                    <a class="dropdown-item" href="/threads?by={{ auth()->user()->name }}">My Threads</a>
+                                @endif
+                            </div>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="/threads/create"><span>+</span>New Thread</a>
                         </li>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Channels</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown03">
