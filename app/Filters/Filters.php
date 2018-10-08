@@ -29,17 +29,19 @@ abstract class Filters
 	{
 		$this->builder = $builder;
 
-		foreach ( $this->getFilters() as $filter => $value ) {
-			if ( method_exists( $this, $filter ) ) {
-				$this->$filter( $value );
-			}
-		}
+		$this->getFilters()
+		     ->filter( function ( $filter ) {
+			     return method_exists( $this, $filter );
+		     } )
+		     ->each( function ( $filter, $value ) {
+			     $this->$filter( $value );
+		     } );
 
 		return $this->builder;
 	}
 
 	public function getFilters()
 	{
-		return $this->request->only( $this->filters );
+		return collect( $this->request->only( $this->filters ) )->flip();
 	}
 }
