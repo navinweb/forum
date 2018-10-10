@@ -13,7 +13,28 @@
                         </article>
                     </div>
                 </div>
+
+                @foreach($replies as $reply)
+                    @include('threads.reply')
+                @endforeach
+
+                {{ $replies->links() }}
+
+                @if(auth()->check())
+                    <form action="{{ $thread->path() . '/replies' }}" method="post">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <textarea name="body" class="form-control" placeholder="Body"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-default">Post</button>
+                    </form>
+                @else
+                    <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in this
+                        discussion.</p>
+                @endif
+
             </div>
+
 
             <div class="col-md-4">
                 <div class="card">
@@ -27,28 +48,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-8">
-                @foreach($thread->replies as $reply)
-                    @include('threads.reply')
-                @endforeach
-            </div>
-
-            @if(auth()->check())
-                <div class="col-md-8">
-                    <form action="{{ $thread->path() . '/replies' }}" method="post">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <textarea name="body" class="form-control" placeholder="Body"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-default">Post</button>
-                    </form>
-                </div>
-            @else
-                <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in this
-                    discussion.</p>
-            @endif
-
         </div>
     </div>
 @endsection
