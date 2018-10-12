@@ -1,14 +1,29 @@
-
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  padding-bottom: 100px;
+}
+
+.level {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.flex {
+  flex: 1;
+}
+
+.card {
+  margin-bottom: 20px;
 }
