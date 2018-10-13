@@ -11,11 +11,11 @@
 |
 */
 
-Auth::routes();
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -28,3 +28,6 @@ Route::post('/threads', 'ThreadsController@store');
 
 // Replies
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
+
+// Favorites
+Route::post('/replies/{reply}/favorites', 'FavoritesController@store');
