@@ -24,6 +24,14 @@ body {
   flex: 1;
 }
 
+.vertical-center {
+  align-items: center;
+}
+
 .card {
   margin-bottom: 20px;
+
+  h5 {
+    margin-bottom: 0;
+  }
 }
