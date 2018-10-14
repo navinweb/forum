@@ -21,13 +21,31 @@ class FavoritesTest extends TestCase
 	}
 
 	/** @test */
-	public function an_authenticated_users_can_favorite_any_replay()
+	public function an_authenticated_users_can_favorite_any_reply()
 	{
 		$this->signIn();
 
 		$reply = create( 'App\Reply' );
 
 		$this->post( 'replies/' . $reply->id . '/favorites' );
+
+		$this->assertCount( 1, $reply->favorites );
+	}
+
+	/** @test */
+	public function an_authenticated_users_may_favorite_a_reply_once()
+	{
+		$this->signIn();
+
+		$reply = create( 'App\Reply' );
+
+		try {
+			$this->post( 'replies/' . $reply->id . '/favorites' );
+			$this->post( 'replies/' . $reply->id . '/favorites' );
+		}
+		catch (\Exception $e) {
+			$this->fail('Did not expect to insert the same records twice');
+		}
 
 		$this->assertCount( 1, $reply->favorites );
 	}
