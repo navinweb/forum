@@ -12,7 +12,7 @@
                 <form method="post" action="/replies/{{ $reply->id }}/favorites">
                     {{ csrf_field() }}
 
-                    <button class="btn btn-default" {{ $reply->isFavorited() ? 'disabled' : ''}}>
+                    <button class="btn btn-default" {{ $reply->isFavorite() ? 'disabled' : ''}}>
                         {{ $reply->favorites_count }} {{ str_plural('star', $reply->favorites_count) }}
                     </button>
                 </form>
