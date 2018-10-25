@@ -9,16 +9,26 @@
             </h1>
         </div>
 
-        @foreach($profileUser->threads as $thread)
+        @foreach($threads as $thread)
             <div class="card">
-                <div class="card-header">{{ $thread->title }}</div>
+                <div class="card-header">
+                    <div class="level">
+                        <span class="flex">
+                            <a href="{{$thread->creator->id}}">{{ $thread->creator->name }}</a> posted:
+                            {{ $thread->title }}
+                        </span>
+
+                        <span>{{ $thread->created_at->diffForHumans() }}</span>
+                    </div>
+                </div>
                 <div class="card-body">
                     <article>
-                        <a href="{{$thread->creator->id}}">{{ $thread->creator->name }}</a> posted:
                         <div class="body">{{ $thread->body }}</div>
                     </article>
                 </div>
             </div>
         @endforeach
+
+        {{ $threads->links() }}
     </div>
 @endsection
