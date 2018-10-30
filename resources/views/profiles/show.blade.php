@@ -15,10 +15,9 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="level">
-                        <span class="flex">
-                            <a href="{{$thread->creator->id}}">{{ $thread->creator->name }}</a> posted:
-                            {{ $thread->title }}
-                        </span>
+                                <span class="flex">
+                                    <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
+                                </span>
 
                                 <span>{{ $thread->created_at->diffForHumans() }}</span>
                             </div>
