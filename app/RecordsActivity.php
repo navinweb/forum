@@ -7,14 +7,18 @@ trait RecordsActivity
 
 	protected static function bootRecordsActivity()
 	{
-		foreach ( static::getRecordEvents() as $event ) {
+		if ( auth()->guest() ) {
+			return;
+		}
+
+		foreach ( static::getActivitiesToRecord() as $event ) {
 			static::$event( function ( $model ) use ( $event ) {
 				$model->recordActivity( $event );
 			} );
 		}
 	}
 
-	public static function getRecordEvents()
+	public static function getActivitiesToRecord()
 	{
 		return [ 'created' ];
 	}
