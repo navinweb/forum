@@ -11,26 +11,9 @@
                     </h1>
                 </div>
 
-                @foreach($threads as $thread)
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="level">
-                                <span class="flex">
-                                    <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
-                                </span>
-
-                                <span>{{ $thread->created_at->diffForHumans() }}</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <article>
-                                <div class="body">{{ $thread->body }}</div>
-                            </article>
-                        </div>
-                    </div>
+                @foreach($activities as $activity)
+                    @include("profiles.activities.{$activity->type}")
                 @endforeach
-
-                {{ $threads->links() }}
             </div>
         </div>
     </div>
