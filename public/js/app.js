@@ -47737,11 +47737,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            body: 'Temporary'
-        };
-    }
+	props: ['message'],
+
+	data: function data() {
+		return {
+			body: '',
+			show: false
+		};
+	},
+	created: function created() {
+		if (this.message) {
+			this.body = this.message;
+			this.show = true;
+		}
+	}
 });
 
 /***/ }),
@@ -47755,6 +47764,9 @@ var render = function() {
   return _c(
     "div",
     {
+      directives: [
+        { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
+      ],
       staticClass: "alert alert-flash alert-warning fade show",
       attrs: { role: "alert" }
     },

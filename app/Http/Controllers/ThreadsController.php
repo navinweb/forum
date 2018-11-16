@@ -70,7 +70,8 @@ class ThreadsController extends Controller
 			'body'       => request( 'body' ),
 		] );
 
-		return redirect( $thread->path() );
+		return redirect( $thread->path() )
+			->with( 'flash', 'Thread has been published' );
 	}
 
 	/**
@@ -124,7 +125,7 @@ class ThreadsController extends Controller
 	 */
 	public function destroy( Channel $channel, Thread $thread )
 	{
-		$this->authorize('update', $thread);
+		$this->authorize( 'update', $thread );
 
 		$thread->delete();
 
