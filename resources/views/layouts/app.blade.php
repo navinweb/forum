@@ -20,12 +20,16 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        @include('layouts.nav')
+<div id="app">
+    @include('layouts.nav')
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+    <main class="py-4">
+        @yield('content')
+
+        <flash message="Temporary"></flash>
+    </main>
+</div>
+
+<script src="{{asset('js/app.js')}}"></script>
 </body>
 </html>
