@@ -1,5 +1,5 @@
 <template>
-    <div class="alert alert-flash alert-warning fade show" role="alert" v-show="show">
+    <div class="alert alert-flash alert-warning fade show" role="alert">
         <strong>Success!</strong> {{ message }}
     </div>
 </template>
@@ -17,8 +17,25 @@
 
 		created() {
 			if (this.message) {
-				this.body = this.message;
+				this.flash(this.message);
+			}
+
+			window.events.$on(
+				'flash', message => this.flash(message)
+            );
+		},
+
+		methods: {
+			flash(message) {
+				this.body = message;
 				this.show = true;
+				this.hide();
+			},
+
+			hide() {
+				setTimeout(() => {
+					this.show = false;
+				}, 3000);
 			}
 		}
 	}

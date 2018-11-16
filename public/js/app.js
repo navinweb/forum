@@ -13892,10 +13892,7 @@ module.exports = __webpack_require__(48);
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
 __webpack_require__(13);
-
-window.Vue = __webpack_require__(36);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -13912,7 +13909,6 @@ var app = new Vue({
 /***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
-
 
 window._ = __webpack_require__(14);
 window.Popper = __webpack_require__(3).default;
@@ -13969,6 +13965,14 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+window.Vue = __webpack_require__(36);
+
+window.events = new Vue();
+
+window.flash = function (message) {
+  window.events.$emit('flash', message);
+};
 
 /***/ }),
 /* 14 */
@@ -47746,9 +47750,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		};
 	},
 	created: function created() {
+		var _this = this;
+
 		if (this.message) {
-			this.body = this.message;
+			this.flash(this.message);
+		}
+
+		window.events.$on('flash', function (message) {
+			return _this.flash(message);
+		});
+	},
+
+
+	methods: {
+		flash: function flash(message) {
+			this.body = message;
 			this.show = true;
+			this.hide();
+		},
+		hide: function hide() {
+			var _this2 = this;
+
+			setTimeout(function () {
+				_this2.show = false;
+			}, 3000);
 		}
 	}
 });
@@ -47764,9 +47789,6 @@ var render = function() {
   return _c(
     "div",
     {
-      directives: [
-        { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
-      ],
       staticClass: "alert alert-flash alert-warning fade show",
       attrs: { role: "alert" }
     },
