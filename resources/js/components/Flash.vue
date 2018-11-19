@@ -1,5 +1,5 @@
 <template>
-    <div class="alert alert-flash alert-warning fade show" role="alert">
+    <div class="alert alert-flash alert-warning fade show" role="alert" v-show="show">
         <strong>Success!</strong> {{ message }}
     </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 	export default {
 		props: ['message'],
-
+        
 		data() {
 			return {
 				body: '',
