@@ -7,7 +7,7 @@
 <script>
 	export default {
 		props: ['message'],
-        
+
 		data() {
 			return {
 				body: '',

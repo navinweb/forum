@@ -47988,6 +47988,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['attributes'],
+
 	data: function data() {
 		return {
 			editing: false,
@@ -47995,24 +47996,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		};
 	},
 
+
 	methods: {
 		update: function update() {
-			console.log('update');
 			axios.patch('/replies/' + this.attributes.id, {
 				body: this.body
 			});
 			this.editing = false;
 			flash('Updated!');
-		},
-
-		test: function test(event) {
-			console.log('123');
-			// `this` внутри методов указывает на экземпляр Vue
-			alert('Привет');
-			// `event` — нативное событие DOM
-			if (event) {
-				alert(event.target.tagName);
-			}
 		}
 	}
 });

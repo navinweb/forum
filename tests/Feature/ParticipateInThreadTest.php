@@ -64,10 +64,23 @@ class ParticipateInThreadTest extends TestCase
 	{
 		$this->signIn();
 
-		$reply = create( 'App\Reply', ['user_id' => auth()->id()] );
+		$reply = create( 'App\Reply', [ 'user_id' => auth()->id() ] );
 
-		$this->delete("/replies/{$reply->id}")->assertStatus(302);
+		$this->delete( "/replies/{$reply->id}" )->assertStatus( 302 );
 
 		$this->assertDatabaseMissing( 'replies', [ 'id' => $reply->id ] );
+	}
+
+	/** @test */
+	public function authorized_users_can_update_replies()
+	{
+		$this->signIn();
+
+		$reply = create( 'App\Reply', [ 'user_id' => auth()->id() ] );
+
+		$updatedReply = 'Changed';
+		$this->patch( "/replies/{$reply->id}", [ 'body' => $updatedReply ] );
+
+		$this->assertDatabaseHas( 'replies', [ 'id' => $reply->id, 'body' => $updatedReply ] );
 	}
 }

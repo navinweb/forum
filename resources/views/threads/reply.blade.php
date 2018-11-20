@@ -24,8 +24,13 @@
         </div>
         <div class="card-body">
             <div v-if="editing">
-                <textarea class="form-control" v-model="body">{{ $reply->body }}</textarea>
+                <div class="form-group">
+                    <textarea class="form-control" v-model="body">{{ $reply->body }}</textarea>
+                </div>
+                <button class="btn btn-xs btn-primary" @click="update">Update</button>
+                <button class="btn btn-xs btn-link" @click="editing = false">Cancel</button>
             </div>
+
 
             <div v-else>
                 <div class="body">{{ $reply->body }}</div>
@@ -35,7 +40,6 @@
         @can('update', $reply)
             <div class="card-footer level">
                 <button class="btn btn-xs" @click="editing = true">Edit</button>
-                <button class="btn btn-xs btn-primary" @click="update">Update</button>
                 <form method="POST" action="/replies/{{$reply->id}}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
