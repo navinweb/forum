@@ -33,6 +33,12 @@ class RepliesController extends Controller
 		return back()->with( 'flash', 'Reply has been left.' );
 	}
 
+	public function update( Reply $reply )
+	{
+		$this->authorize( 'update', $reply );
+		$reply->update( [ 'body' => request( 'body' ) ] );
+	}
+
 	public function destroy( Reply $reply )
 	{
 		if ( $reply->user_id != auth()->id() ) {
@@ -40,6 +46,7 @@ class RepliesController extends Controller
 		}
 
 		$reply->delete();
+
 		return back();
 	}
 }
