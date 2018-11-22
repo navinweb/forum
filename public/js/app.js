@@ -47916,10 +47916,7 @@ var render = function() {
       staticClass: "alert alert-flash alert-warning fade show",
       attrs: { role: "alert" }
     },
-    [
-      _c("strong", [_vm._v("Success!")]),
-      _vm._v(" " + _vm._s(_vm.message) + "\n")
-    ]
+    [_c("strong", [_vm._v("Success!")]), _vm._v(" " + _vm._s(_vm.body) + "\n")]
   )
 }
 var staticRenderFns = []
@@ -48002,7 +47999,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.patch('/replies/' + this.attributes.id, {
 				body: this.body
 			});
+
 			this.editing = false;
+
 			flash('Updated!');
 		}
 	}

@@ -15,20 +15,26 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="app">
-        @include('layouts.nav')
+<div id="app">
+    @include('layouts.nav')
 
-        <main class="py-4">
-            @yield('content')
+    <main class="py-4">
+        @yield('content')
 
-            <flash message="{{ session('flash') }}"></flash>
-        </main>
-    </div>
+        <flash message="{{ session('flash') }}"></flash>
+    </main>
+</div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
