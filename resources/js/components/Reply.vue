@@ -1,24 +1,32 @@
 <script>
-    export default {
-    	props: ['attributes'],
+	export default {
+		props: ['attributes'],
 
-        data(){
-        	return {
-		        editing: false,
-                body: this.attributes.body
-            }
-        },
+		data(){
+			return {
+				editing: false,
+				body: this.attributes.body
+			}
+		},
 
-	    methods: {
-		    update() {
-			    axios.patch('/replies/' + this.attributes.id, {
-				    body: this.body
-			    });
+		methods: {
+			update() {
+				axios.patch('/replies/' + this.attributes.id, {
+					body: this.body
+				});
 
-			    this.editing = false;
+				this.editing = false;
 
-			    flash('Updated!');
-		    }
-	    }
-    }
+				flash('Updated!');
+			},
+
+			destroy() {
+				axios.delete('/replies/' + this.attributes.id);
+
+				$(this.$el).fadeOut('300', () => {
+					flash('Reply has been deleted.');
+				});
+			}
+		}
+	}
 </script>
