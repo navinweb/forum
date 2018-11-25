@@ -10,18 +10,15 @@
                 </h5>
 
                 <div>
-                    <form
-                            method="post" action="/replies/{{ $reply->id }}/favorites"
-                    >
-                        {{ csrf_field() }}
+                    <favorite :reply="{{$reply}}"></favorite>
+                    {{--<form method="post" action="/replies/{{ $reply->id }}/favorites">--}}
+                        {{--{{ csrf_field() }}--}}
 
-                        <button class="btn btn-default" {{ $reply->isFavorite() ? 'disabled' : ''}}>
-                            {{ $reply->favorites_count }} {{ str_plural('star', $reply->favorites_count) }}
-                        </button>
-                    </form>
+                    {{--</form>--}}
                 </div>
             </div>
         </div>
+
         <div class="card-body">
             <div v-if="editing">
                 <div class="form-group">
@@ -38,12 +35,6 @@
             <div class="card-footer level">
                 <button class="btn btn-xs" @click="editing = true">Edit</button>
                 <button class="btn btn-xs btn-danger" @click="destroy">Delete</button>
-
-                {{--<form method="POST" action="/replies/{{$reply->id}}">--}}
-                    {{--{{ csrf_field() }}--}}
-                    {{--{{ method_field('DELETE') }}--}}
-                    {{--<button type="submit" class="btn btn-danger btn-xs">Delete</button>--}}
-                {{--</form>--}}
             </div>
         @endcan
     </div>
