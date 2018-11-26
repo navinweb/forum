@@ -48094,10 +48094,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	data: function data() {
 		return {
-			favoritesCount: 10
+			favoritesCount: this.reply.favoritesCount,
+			isFavorited: false
 		};
 	},
 
+
+	computed: {
+		classes: function classes() {
+			return ['btn', this.isFavorited ? 'btn-primary' : 'btn-default'];
+		}
+	},
 
 	methods: {
 		toogle: function toogle() {
@@ -48105,6 +48112,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				axios.delete('/replies/' + this.reply.id + '/favorites');
 			} else {
 				axios.post('/replies/' + this.reply.id + '/favorites');
+
+				this.isFavorited = true;
+				this.favoritesCount++;
 			}
 		}
 	}
@@ -48118,15 +48128,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "button",
-    { staticClass: "btn btn-default", on: { click: _vm.toogle } },
-    [
-      _c("i", { staticClass: "fa fa-heart" }),
-      _vm._v(" "),
-      _c("span", { domProps: { textContent: _vm._s(_vm.favoritesCount) } })
-    ]
-  )
+  return _c("button", { class: _vm.classes, on: { click: _vm.toogle } }, [
+    _c("i", { staticClass: "fa fa-heart" }),
+    _vm._v(" "),
+    _c("span", { domProps: { textContent: _vm._s(_vm.favoritesCount) } })
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
