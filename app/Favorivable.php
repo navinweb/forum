@@ -33,6 +33,11 @@ trait Favorivable
 		return ! ! $this->favorites->where( 'user_id', auth()->id() )->count();
 	}
 
+	public function getIsFavoriteAttribute()
+	{
+		return $this->isFavorite();
+	}
+
 	public function getFavoritesCountAttribute()
 	{
 		return $this->favorites->count();

@@ -12,7 +12,7 @@
 		data() {
 			return {
 				favoritesCount: this.reply.favoritesCount,
-				isFavorited: false
+				isFavorited: this.reply.isFavorite
 			}
 		},
 
@@ -26,6 +26,9 @@
 			toogle(){
 				if (this.isFavorited) {
 					axios.delete('/replies/' + this.reply.id + '/favorites');
+
+					this.isFavorited = false;
+					this.favoritesCount--;
 				} else {
 					axios.post('/replies/' + this.reply.id + '/favorites');
 

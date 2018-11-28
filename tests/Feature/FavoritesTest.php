@@ -39,9 +39,7 @@ class FavoritesTest extends TestCase
 
 		$reply = create( 'App\Reply' );
 
-		$this->post( 'replies/' . $reply->id . '/favorites' );
-
-		$this->assertCount( 1, $reply->favorites );
+		$reply->favorite();
 
 		$this->delete( 'replies/' . $reply->id . '/favorites' );
 
