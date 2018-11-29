@@ -48103,22 +48103,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	computed: {
 		classes: function classes() {
 			return ['btn', this.isFavorited ? 'btn-primary' : 'btn-default'];
+		},
+		endpoint: function endpoint() {
+			return '/replies/' + this.reply.id + '/favorites';
 		}
 	},
 
 	methods: {
 		toogle: function toogle() {
-			if (this.isFavorited) {
-				axios.delete('/replies/' + this.reply.id + '/favorites');
+			return this.isFavorited ? this.destroy() : this.create();
+		},
+		create: function create() {
+			axios.post(this.endpoint);
 
-				this.isFavorited = false;
-				this.favoritesCount--;
-			} else {
-				axios.post('/replies/' + this.reply.id + '/favorites');
+			this.isFavorited = true;
+			this.favoritesCount++;
+		},
+		destroy: function destroy() {
+			axios.delete(this.endpoint);
 
-				this.isFavorited = true;
-				this.favoritesCount++;
-			}
+			this.isFavorited = false;
+			this.favoritesCount--;
 		}
 	}
 });
