@@ -11,10 +11,6 @@
 
                 <div>
                     <favorite :reply="{{$reply}}"></favorite>
-                    {{--<form method="post" action="/replies/{{ $reply->id }}/favorites">--}}
-                        {{--{{ csrf_field() }}--}}
-
-                    {{--</form>--}}
                 </div>
             </div>
         </div>
