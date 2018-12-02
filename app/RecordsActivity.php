@@ -4,7 +4,6 @@ namespace App;
 
 trait RecordsActivity
 {
-
 	protected static function bootRecordsActivity()
 	{
 		if ( auth()->guest() ) {
