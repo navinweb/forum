@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div v-for="reply in items">
-            <reply :data="reply"></reply>
+        <div v-for="(reply, index) in items">
+            <reply :data="reply" @deleted="remove(index)"></reply>
         </div>
     </div>
 </template>
@@ -18,6 +18,14 @@
 			return {
 				items: this.data
 			}
-		}
+		},
+
+        methods: {
+			remove(index) {
+				this.items.splice(index, 1);
+
+				flash('Reply was deleted!');
+            }
+        }
 	}
 </script>

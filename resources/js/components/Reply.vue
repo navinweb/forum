@@ -31,10 +31,10 @@
         </div>
 
         <!--@can('update', $reply)-->
-        <!--<div class="card-footer level">-->
-            <!--<button class="btn btn-xs" @click="editing = true">Edit</button>-->
-            <!--<button class="btn btn-xs btn-danger" @click="destroy">Delete</button>-->
-        <!--</div>-->
+        <div class="card-footer level">
+            <button class="btn btn-xs" @click="editing = true">Edit</button>
+            <button class="btn btn-xs btn-danger" @click="destroy">Delete</button>
+        </div>
         <!--@endcan-->
     </div>
 </template>
@@ -68,9 +68,11 @@
 			destroy() {
 				axios.delete('/replies/' + this.data.id);
 
-				$(this.$el).fadeOut('300', () => {
-					flash('Reply has been deleted.');
-				});
+				this.$emit('deleted', this.data.id);
+
+//				$(this.$el).fadeOut('300', () => {
+//					flash('Reply has been deleted.');
+//				});
 			}
 		}
 	}

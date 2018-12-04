@@ -47948,6 +47948,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		return {
 			items: this.data
 		};
+	},
+
+
+	methods: {
+		remove: function remove(index) {
+			this.items.splice(index, 1);
+
+			flash('Reply was deleted!');
+		}
 	}
 });
 
@@ -48076,9 +48085,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		destroy: function destroy() {
 			axios.delete('/replies/' + this.data.id);
 
-			$(this.$el).fadeOut('300', function () {
-				flash('Reply has been deleted.');
-			});
+			this.$emit('deleted', this.data.id);
+
+			//				$(this.$el).fadeOut('300', () => {
+			//					flash('Reply has been deleted.');
+			//				});
 		}
 	}
 });
@@ -48281,6 +48292,27 @@ var render = function() {
             )
           ])
         : _c("div", { domProps: { textContent: _vm._s(_vm.body) } })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-footer level" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-xs",
+          on: {
+            click: function($event) {
+              _vm.editing = true
+            }
+          }
+        },
+        [_vm._v("Edit")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-xs btn-danger", on: { click: _vm.destroy } },
+        [_vm._v("Delete")]
+      )
     ])
   ])
 }
@@ -48304,8 +48336,21 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.items, function(reply) {
-      return _c("div", [_c("reply", { attrs: { data: reply } })], 1)
+    _vm._l(_vm.items, function(reply, index) {
+      return _c(
+        "div",
+        [
+          _c("reply", {
+            attrs: { data: reply },
+            on: {
+              deleted: function($event) {
+                _vm.remove(index)
+              }
+            }
+          })
+        ],
+        1
+      )
     })
   )
 }
