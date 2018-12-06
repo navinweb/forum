@@ -33,10 +33,6 @@
 
                     <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
 
-                    {{--@foreach($replies as $reply)--}}
-                    {{--@include('threads.reply')--}}
-                    {{--@endforeach--}}
-
                     {{--{{ $replies->links() }}--}}
 
                     @if(auth()->check())

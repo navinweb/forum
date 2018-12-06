@@ -48063,8 +48063,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -48080,6 +48078,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		};
 	},
 
+
+	computed: {
+		signedIn: function signedIn() {
+			return window.App.signedIn;
+		}
+	},
 
 	methods: {
 		update: function update() {
@@ -48248,7 +48252,11 @@ var render = function() {
               _vm._s(_vm.data.created_at) +
               "...\n            "
           )
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.signedIn
+          ? _c("div", [_c("favorite", { attrs: { reply: _vm.data } })], 1)
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),

@@ -10,11 +10,9 @@
                     said {{ data.created_at }}...
                 </h5>
 
-                <!--@if(Auth::check())-->
-                <!--<div>-->
-                    <!--<favorite :reply="{{$reply}}"></favorite>-->
-                <!--</div>-->
-                <!--@endif-->
+                <div v-if="signedIn">
+                    <favorite :reply="data"></favorite>
+                </div>
             </div>
         </div>
 
@@ -53,6 +51,12 @@
 				body: this.data.body
 			}
 		},
+
+        computed: {
+			signedIn(){
+				return window.App.signedIn;
+            }
+        },
 
 		methods: {
 			update() {
