@@ -28,12 +28,10 @@
             <div v-else v-text="body"></div>
         </div>
 
-        <!--@can('update', $reply)-->
-        <div class="card-footer level">
+        <div class="card-footer level" v-if="canUpdate">
             <button class="btn btn-xs" @click="editing = true">Edit</button>
             <button class="btn btn-xs btn-danger" @click="destroy">Delete</button>
         </div>
-        <!--@endcan-->
     </div>
 </template>
 
@@ -55,6 +53,10 @@
         computed: {
 			signedIn(){
 				return window.App.signedIn;
+            },
+
+            canUpdate() {
+				return this.data.user_id == window.App.user.id;
             }
         },
 

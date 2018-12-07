@@ -48061,8 +48061,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -48082,6 +48080,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	computed: {
 		signedIn: function signedIn() {
 			return window.App.signedIn;
+		},
+		canUpdate: function canUpdate() {
+			return this.data.user_id == window.App.user.id;
 		}
 	},
 
@@ -48311,26 +48312,31 @@ var render = function() {
         : _c("div", { domProps: { textContent: _vm._s(_vm.body) } })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "card-footer level" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-xs",
-          on: {
-            click: function($event) {
-              _vm.editing = true
-            }
-          }
-        },
-        [_vm._v("Edit")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-xs btn-danger", on: { click: _vm.destroy } },
-        [_vm._v("Delete")]
-      )
-    ])
+    _vm.canUpdate
+      ? _c("div", { staticClass: "card-footer level" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-xs",
+              on: {
+                click: function($event) {
+                  _vm.editing = true
+                }
+              }
+            },
+            [_vm._v("Edit")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-xs btn-danger",
+              on: { click: _vm.destroy }
+            },
+            [_vm._v("Delete")]
+          )
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
