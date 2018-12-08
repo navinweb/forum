@@ -50,15 +50,15 @@
 			}
 		},
 
-        computed: {
+		computed: {
 			signedIn(){
 				return window.App.signedIn;
-            },
+			},
 
-            canUpdate() {
-				return this.data.user_id == window.App.user.id;
-            }
-        },
+			canUpdate() {
+				return this.authorize(user => this.data.user_id == user.id);
+			}
+		},
 
 		methods: {
 			update() {

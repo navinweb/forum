@@ -25046,6 +25046,12 @@ if (token) {
 
 window.Vue = __webpack_require__(12);
 
+Vue.prototype.authorize = function (handler) {
+  var user = window.App.user;
+
+  return user ? handler(user) : false;
+};
+
 window.events = new Vue();
 
 window.flash = function (message) {
@@ -48082,7 +48088,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			return window.App.signedIn;
 		},
 		canUpdate: function canUpdate() {
-			return this.data.user_id == window.App.user.id;
+			var _this = this;
+
+			return this.authorize(function (user) {
+				return _this.data.user_id == user.id;
+			});
 		}
 	},
 
