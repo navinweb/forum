@@ -35,19 +35,6 @@
 
                     {{--{{ $replies->links() }}--}}
 
-                    @if(auth()->check())
-                        <form action="{{ $thread->path() . '/replies' }}" method="post">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <textarea name="body" class="form-control" placeholder="Body"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-default">Post</button>
-                        </form>
-                    @else
-                        <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in this
-                            discussion.</p>
-                    @endif
-
                 </div>
 
                 <div class="col-md-4">
