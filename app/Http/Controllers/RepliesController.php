@@ -31,7 +31,7 @@ class RepliesController extends Controller
 		] );
 
 		if(request()->expectsJson()) {
-			return $reply;
+			return $reply->load('owner');
 		}
 
 		return back()->with( 'flash', 'Reply has been left.' );

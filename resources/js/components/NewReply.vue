@@ -1,19 +1,19 @@
 <template>
     <div>
-        <!--@if(auth()->check())-->
-        <!--<form action="{{ $thread->path() . '/replies' }}" method="post">-->
-        <div class="form-group">
+        <div v-if="signedIn">
+            <div class="form-group">
                 <textarea name="body"
                           class="form-control"
                           placeholder="Body"
                           rows="5"
                           required
                           v-model="body"></textarea>
+            </div>
+            <button type="submit"
+                    class="btn btn-default"
+                    @click="addReply">Post
+            </button>
         </div>
-        <button type="submit"
-                class="btn btn-default"
-                @click="addReply">Post
-        </button>
         <!--</form>-->
         <!--@else-->
         <!--<p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in this-->
@@ -27,9 +27,15 @@
 		data() {
 			return {
 				body: '',
-                endpoint: ''
+				endpoint: ''
 			}
 		},
+
+        computed: {
+		    signedIn() {
+		    	return window.App.signedIn;
+            }
+        },
 
 		methods: {
 			addReply() {
