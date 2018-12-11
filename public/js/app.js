@@ -47964,7 +47964,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	data: function data() {
 		return {
-			items: this.data
+			items: this.data,
+			endpoint: location.pathname + '/replies'
 		};
 	},
 
@@ -48395,7 +48396,10 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _c("new-reply", { on: { created: _vm.add } })
+      _c("new-reply", {
+        attrs: { endpoint: _vm.endpoint },
+        on: { created: _vm.add }
+      })
     ],
     2
   )
@@ -48494,14 +48498,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['endpoint'],
+
 	data: function data() {
 		return {
-			body: '',
-			endpoint: ''
+			body: ''
 		};
 	},
 
@@ -48579,7 +48582,11 @@ var render = function() {
             [_vm._v("Post\n        ")]
           )
         ])
-      : _vm._e()
+      : _c("p", { staticClass: "text-center" }, [
+          _vm._v("Please "),
+          _c("a", { attrs: { href: "/login" } }, [_vm._v("sign in")]),
+          _vm._v(" to participate in this\n        discussion.")
+        ])
   ])
 }
 var staticRenderFns = []

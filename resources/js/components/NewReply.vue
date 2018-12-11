@@ -14,28 +14,27 @@
                     @click="addReply">Post
             </button>
         </div>
-        <!--</form>-->
-        <!--@else-->
-        <!--<p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in this-->
-        <!--discussion.</p>-->
-        <!--@endif-->
+
+        <p class="text-center" v-else>Please <a href="/login">sign in</a> to participate in this
+            discussion.</p>
     </div>
 </template>
 
 <script>
 	export default{
+		props: ['endpoint'],
+
 		data() {
 			return {
-				body: '',
-				endpoint: ''
+				body: ''
 			}
 		},
 
-        computed: {
-		    signedIn() {
-		    	return window.App.signedIn;
-            }
-        },
+		computed: {
+			signedIn() {
+				return window.App.signedIn;
+			}
+		},
 
 		methods: {
 			addReply() {
