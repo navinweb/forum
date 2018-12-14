@@ -47958,19 +47958,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['data'],
-
 	components: { Reply: __WEBPACK_IMPORTED_MODULE_0__Reply_vue___default.a, NewReply: __WEBPACK_IMPORTED_MODULE_1__NewReply_vue___default.a },
 
 	data: function data() {
 		return {
-			items: this.data,
+			items: [],
 			endpoint: location.pathname + '/replies'
 		};
+	},
+	created: function created() {
+		this.fetch();
 	},
 
 
 	methods: {
+		fetch: function fetch() {
+			axios.get(this.url).then(this.refresh);
+		},
+		refresh: function refresh(response) {},
 		add: function add(reply) {
 			this.items.push(reply);
 
