@@ -47943,6 +47943,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Reply_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Reply_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__NewReply_vue__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__NewReply_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__NewReply_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_collection__ = __webpack_require__(192);
 //
 //
 //
@@ -47953,6 +47954,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+
 
 
 
@@ -47960,9 +47964,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	components: { Reply: __WEBPACK_IMPORTED_MODULE_0__Reply_vue___default.a, NewReply: __WEBPACK_IMPORTED_MODULE_1__NewReply_vue___default.a },
 
+	mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_collection__["a" /* default */]],
+
 	data: function data() {
 		return {
-			items: [],
+			dataSet: false,
 			endpoint: location.pathname + '/replies'
 		};
 	},
@@ -47973,20 +47979,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		fetch: function fetch() {
-			axios.get(this.url).then(this.refresh);
+			axios.get(this.url()).then(this.refresh);
 		},
-		refresh: function refresh(response) {},
-		add: function add(reply) {
-			this.items.push(reply);
-
-			this.$emit('added');
+		url: function url() {
+			return location.pathname + '/replies';
 		},
-		remove: function remove(index) {
-			this.items.splice(index, 1);
+		refresh: function refresh(_ref) {
+			var data = _ref.data;
 
-			this.$emit('removed');
-
-			flash('Reply was deleted!');
+			this.dataSet = data;
+			this.items = data.data;
+			console.log(data);
 		}
 	}
 });
@@ -48406,6 +48409,8 @@ var render = function() {
           1
         )
       }),
+      _vm._v(" "),
+      _c("paginator"),
       _vm._v(" "),
       _c("new-reply", {
         attrs: { endpoint: _vm.endpoint },
@@ -65365,6 +65370,33 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = 191;
+
+/***/ }),
+/* 192 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+	data: function data() {
+		return {
+			items: []
+		};
+	},
+
+
+	methods: {
+		add: function add(item) {
+			this.items.push(item);
+
+			this.$emit('added');
+		},
+		remove: function remove(index) {
+			this.items.splice(index, 1);
+
+			this.$emit('removed');
+		}
+	}
+});
 
 /***/ })
 /******/ ]);
