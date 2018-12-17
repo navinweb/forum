@@ -1,16 +1,14 @@
 <template>
     <ul class="pagination" v-if="shouldPaginate">
         <li class="page-item" v-show="prevUrl">
-            <a class="page-link" href="#" aria-label="Previous" rel="prev">
+            <a class="page-link" href="#" aria-label="Previous" rel="prev" @click.prevent="page--">
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Previous</span>
             </a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <!--<li class="page-item"><a class="page-link" href="#">1</a></li>-->
         <li class="page-item" v-show="nextUrl">
-            <a class="page-link" href="#" aria-label="Next" rel="next">
+            <a class="page-link" href="#" aria-label="Next" rel="next" @click.prevent="page++">
                 <span aria-hidden="true">&raquo;</span>
                 <span class="sr-only">Next</span>
             </a>
@@ -30,19 +28,28 @@
 			}
 		},
 
-        watch: {
+		watch: {
 			dataSet(){
 				this.page = this.dataSet.current_page;
 				this.prevUrl = this.dataSet.prev_page_url;
 				this.nextUrl = this.dataSet.next_page_url;
-            }
-        },
+			},
+
+			page() {
+				this.broadcast();
+			}
+		},
 
 		computed: {
 			shouldPaginate() {
-				return !! this.prevUrl || !! this.nextUrl;
-			},
+				return !!this.prevUrl || !!this.nextUrl;
+			}
+		},
 
+		methods: {
+			broadcast() {
+	        	this.$emit('updated', this.page);
+			}
 		}
 	}
 </script>

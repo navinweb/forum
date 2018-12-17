@@ -4,7 +4,7 @@
             <reply :data="reply" @deleted="remove(index)"></reply>
         </div>
 
-        <paginator :dataSet="dataSet"></paginator>
+        <paginator :dataSet="dataSet" @updated="fetch"></paginator>
 
         <new-reply :endpoint="endpoint" @created="add"></new-reply>
     </div>
@@ -18,34 +18,34 @@
 	export default {
 		components: {Reply, NewReply},
 
-        mixins: [collection],
+		mixins: [collection],
 
 		data() {
 			return {
 				dataSet: false,
-                endpoint: location.pathname + '/replies'
+				endpoint: location.pathname + '/replies'
 			}
 		},
 
-        created() {
-            this.fetch();
-        },
+		created() {
+			this.fetch();
+		},
 
 		methods: {
-			fetch() {
-                axios.get(this.url())
-                    .then(this.refresh);
-            },
+			fetch(page) {
+				axios.get(this.url(page))
+					.then(this.refresh);
+			},
 
-            url(){
-				return location.pathname + '/replies';
-            },
+			url(page = 1){
+				return `${location.pathname}/replies?page=` + page;
+			},
 
 			refresh({data}){
-            	this.dataSet = data;
-            	this.items = data.data;
-                console.log(data);
-            }
+				this.dataSet = data;
+				this.items = data.data;
+				console.log(data);
+			}
 		}
 	}
 </script>

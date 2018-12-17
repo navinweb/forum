@@ -47979,11 +47979,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 	methods: {
-		fetch: function fetch() {
-			axios.get(this.url()).then(this.refresh);
+		fetch: function fetch(page) {
+			axios.get(this.url(page)).then(this.refresh);
 		},
 		url: function url() {
-			return location.pathname + '/replies';
+			var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+			return location.pathname + '/replies?page=' + page;
 		},
 		refresh: function refresh(_ref) {
 			var data = _ref.data;
@@ -48411,7 +48413,10 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _c("paginator", { attrs: { dataSet: _vm.dataSet } }),
+      _c("paginator", {
+        attrs: { dataSet: _vm.dataSet },
+        on: { updated: _vm.fetch }
+      }),
       _vm._v(" "),
       _c("new-reply", {
         attrs: { endpoint: _vm.endpoint },
@@ -65470,8 +65475,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['dataSet'],
@@ -65490,12 +65493,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.page = this.dataSet.current_page;
 			this.prevUrl = this.dataSet.prev_page_url;
 			this.nextUrl = this.dataSet.next_page_url;
+		},
+		page: function page() {
+			this.broadcast();
 		}
 	},
 
 	computed: {
 		shouldPaginate: function shouldPaginate() {
 			return !!this.prevUrl || !!this.nextUrl;
+		}
+	},
+
+	methods: {
+		broadcast: function broadcast() {
+			this.$emit('updated', this.page);
 		}
 	}
 });
@@ -65523,14 +65535,27 @@ var render = function() {
             ],
             staticClass: "page-item"
           },
-          [_vm._m(0)]
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#", "aria-label": "Previous", rel: "prev" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.page--
+                  }
+                }
+              },
+              [
+                _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("«")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
+              ]
+            )
+          ]
         ),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _vm._m(2),
-        _vm._v(" "),
-        _vm._m(3),
         _vm._v(" "),
         _c(
           "li",
@@ -65545,71 +65570,31 @@ var render = function() {
             ],
             staticClass: "page-item"
           },
-          [_vm._m(4)]
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#", "aria-label": "Next", rel: "next" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.page++
+                  }
+                }
+              },
+              [
+                _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("»")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
+              ]
+            )
+          ]
         )
       ])
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "page-link",
-        attrs: { href: "#", "aria-label": "Previous", rel: "prev" }
-      },
-      [
-        _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("«")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "page-item" }, [
-      _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [_vm._v("1")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "page-item" }, [
-      _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [_vm._v("2")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "page-item" }, [
-      _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [_vm._v("3")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "page-link",
-        attrs: { href: "#", "aria-label": "Next", rel: "next" }
-      },
-      [
-        _c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("»")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
