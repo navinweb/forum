@@ -1,15 +1,25 @@
 <template>
-    <button class="btn btn-outline-secondary" @click="subscribe">Subscribe</button>
+    <button :class="classes" @click="subscribe">Subscribe</button>
 </template>
 
 <script>
-    export default {
-        methods: {
-        	subscribe() {
-        		axios.post(location.pathname + '/subscriptions');
+	export default {
+		props: ['active'],
 
-        		flash('Subscribed');
+        computed: {
+			classes() {
+				return ['btn', this.active ? 'btn-primary' : 'btn-outline-secondary']
             }
-        }
-    }
+        },
+
+		methods: {
+			subscribe() {
+				axios.post(location.pathname + '/subscriptions');
+
+				this.active = true;
+
+				flash('Subscribed');
+			}
+		}
+	}
 </script>
