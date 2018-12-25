@@ -65677,11 +65677,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		subscribe: function subscribe() {
-			axios.post(location.pathname + '/subscriptions');
+			axios[this.active ? 'delete' : 'post'](location.pathname + '/subscriptions');
 
-			this.active = true;
-
-			flash('Subscribed');
+			this.active = !this.active;
 		}
 	}
 });
