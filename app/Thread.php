@@ -12,7 +12,7 @@ class Thread extends Model
 
 	protected $with = [ 'creator', 'channel' ];
 
-	protected $appends = ['isSubscribedTo'];
+	protected $appends = [ 'isSubscribedTo' ];
 
 	public static function boot()
 	{
@@ -45,7 +45,13 @@ class Thread extends Model
 
 	public function addReply( $reply )
 	{
-		return $this->replies()->create( $reply );
+		$reply = $this->replies()->create( $reply );
+
+		foreach ($this->subscriptions as $subscription) {
+			$subscription->user->notify(new ThreadWasUpdated);
+		}
+
+		return $reply;
 	}
 
 	public function scopeFilter( $query, $filters )
