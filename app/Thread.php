@@ -49,7 +49,9 @@ class Thread extends Model
 		$reply = $this->replies()->create( $reply );
 
 		foreach ( $this->subscriptions as $subscription ) {
-			$subscription->user->notify( new ThreadWasUpdated( $this, $reply ) );
+			if ($subscription->user_id != $reply->user_id) {
+				$subscription->user->notify( new ThreadWasUpdated( $this, $reply ) );
+			}
 		}
 
 		return $reply;
@@ -60,11 +62,18 @@ class Thread extends Model
 		return $filters->apply( $query );
 	}
 
+	/**
+	 * @param int|null $userId
+	 *
+	 * @return $this
+	 */
 	public function subscribe( $userId = null )
 	{
 		$this->subscriptions()->create( [
 			'user_id' => $userId ?: auth()->id()
 		] );
+
+		return $this;
 	}
 
 	public function unsubscribe( $userId = null )
