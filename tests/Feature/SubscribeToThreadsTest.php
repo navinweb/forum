@@ -19,7 +19,7 @@ class SubscribeToThreadsTest extends TestCase
 
 		$this->post( $thread->path() . '/subscriptions' );
 
-		$this->assertCount( 1, $thread->fresh()->notifications );
+		$this->assertCount( 1, $thread->fresh()->subscriptions );
 	}
 
 	/** @test */
@@ -33,7 +33,7 @@ class SubscribeToThreadsTest extends TestCase
 
 		$this->delete( $thread->path() . '/subscriptions' );
 
-		$this->assertCount( 1, $thread->subscriptions );
+		$this->assertCount( 0, $thread->subscriptions );
 		//		$this->assertCount( 1, auth()->user()->notifications; );
 	}
 }
