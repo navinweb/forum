@@ -10,7 +10,7 @@
                             <div class="level">
                                 <span class="flex">
                                     <a href="/profiles/{{$thread->creator->name}}">{{ $thread->creator->name }}</a> posted:
-                                    {{ $thread->title }}
+                                    <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
                                 </span>
 
                                 @can('update', $thread)
