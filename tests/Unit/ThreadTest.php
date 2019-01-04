@@ -51,7 +51,7 @@ class ThreadTest extends TestCase
 	}
 
 	/** @test */
-	public function a_thread_notifies_all_registered_subscribers_when_a_replyis_added()
+	public function a_thread_notifies_all_registered_subscribers_when_a_replies_added()
 	{
 		Notification::fake();
 
@@ -110,5 +110,21 @@ class ThreadTest extends TestCase
 		$thread->subscribe();
 
 		$this->assertTrue( $thread->isSubscribedTo );
+	}
+
+	/** @test */
+	public function a_thread_can_check_if_the_autheticated_user_has_read_all_replies()
+	{
+		$this->signIn();
+
+		$thread = create( 'App\Thread' );
+
+		tap( auth()->user(), function ( $user ) use ( $thread ) {
+			$this->assertTrue( $thread->hasUpdatesFor( $user ) );
+
+			$user->read($thread);
+
+			$this->assertFalse( $thread->hasUpdatesFor( $user ) );
+		} );
 	}
 }
