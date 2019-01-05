@@ -2,41 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Spam;
 use App\Thread;
 use App\Reply;
 use Illuminate\Http\Request;
+use PHPUnit\Runner\Exception;
 
 class RepliesController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware( 'auth', ['except' => 'index'] );
+		$this->middleware( 'auth', [ 'except' => 'index' ] );
 	}
 
 	public function index( $channelId, Thread $thread )
 	{
-		return $thread->replies()->paginate(10);
+		return $thread->replies()->paginate( 10 );
 	}
 
 	/**
 	 * @param $channelId
 	 * @param Thread $thread
 	 *
+	 * @param Spam $spam
+	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function store( $channelId, Thread $thread )
+	public function store( $channelId, Thread $thread, Spam $spam )
 	{
 		$this->validate( request(), [
 			'body' => 'required',
 		] );
+
+		$spam->detect(request('body'));
 
 		$reply = $thread->addReply( [
 			'body'    => request( 'body' ),
 			'user_id' => auth()->id(),
 		] );
 
-		if(request()->expectsJson()) {
-			return $reply->load('owner');
+		if ( request()->expectsJson() ) {
+			return $reply->load( 'owner' );
 		}
 
 		return back()->with( 'flash', 'Reply has been left.' );
@@ -56,8 +62,8 @@ class RepliesController extends Controller
 
 		$reply->delete();
 
-		if(request()->expectsJson()){
-			return response(['status' => 'Reply deleted']);
+		if ( request()->expectsJson() ) {
+			return response( [ 'status' => 'Reply deleted' ] );
 		}
 
 		return back();

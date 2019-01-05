@@ -102,7 +102,7 @@ class Thread extends Model
 		            ->exists();
 	}
 
-	public function hasUpdatesFor( User $user )
+	public function hasUpdatesFor( $user )
 	{
 		$key = $user->visitedThreadCacheKey( $this );
 
