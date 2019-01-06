@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Spam;
+use App\Inspections\Spam;
 use App\Thread;
 use App\Reply;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class RepliesController extends Controller
 			'body' => 'required',
 		] );
 
-		$spam->detect(request('body'));
+		$spam->detect( request( 'body' ) );
 
 		$reply = $thread->addReply( [
 			'body'    => request( 'body' ),
