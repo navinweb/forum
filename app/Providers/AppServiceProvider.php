@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Dotenv\Validator;
 use Illuminate\Support\ServiceProvider;
 use App\Channel;
 
@@ -21,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
 
 			$view->with( 'channels', $channels );
 		} );
+
+		\Validator::extend('spamfree', 'App\Rules\SpamFree@passes');
 	}
 
 	/**
