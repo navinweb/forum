@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Inspections\Spam;
 use App\Thread;
 use App\Reply;
+use Gate;
 use Illuminate\Http\Request;
 use PHPUnit\Runner\Exception;
 
@@ -28,6 +29,10 @@ class RepliesController extends Controller
 	 */
 	public function store( $channelId, Thread $thread )
 	{
+		if ( Gate::denies( 'create', new Reply ) ) {
+			return response( 'You are posting too frequently. Please wait a one minute.', 422 );
+		}
+
 		try {
 			request()->validate( [ 'body' => 'required|spamfree' ] );
 
@@ -44,15 +49,15 @@ class RepliesController extends Controller
 
 	/**
 	 * @param Reply $reply
+	 *
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
 	 */
 	public function update( Reply $reply )
 	{
 		$this->authorize( 'update', $reply );
 
 		try {
-			$this->validateReply();
-
-			$reply->update( [ 'body' => request( 'body' ) ] );
+			$reply->update( request()->validate( [ 'body' => 'required|spamfree' ] ) );
 		} catch ( \Exception $e ) {
 			return response( 'Sorry, your reply could not saved at this time.', 422 );
 		}
