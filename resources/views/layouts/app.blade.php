@@ -29,6 +29,8 @@
             display: none;
         }
     </style>
+
+    @yield('header')
 </head>
 
 <body>
@@ -44,5 +46,6 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
+@yield('scripts')
 </body>
 </html>
