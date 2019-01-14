@@ -16,6 +16,15 @@ body {
   padding-bottom: 100px;
 }
 
+.flex-center {
+  display: flex;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+  }
+}
+
 .level {
   display: flex;
   //align-items: flex-start;

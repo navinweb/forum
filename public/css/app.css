@@ -10476,6 +10476,19 @@ body {
   padding-bottom: 100px;
 }
 
+.flex-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.flex-center h1 {
+  margin: 0;
+}
+
 .level {
   display: -webkit-box;
   display: -ms-flexbox;
