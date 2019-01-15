@@ -8,6 +8,7 @@ use App\Filters\ThreadFilters;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Channel;
+use Illuminate\Support\Facades\Redis;
 
 class ThreadsController extends Controller
 {
@@ -37,7 +38,9 @@ class ThreadsController extends Controller
 			return $threads;
 		}
 
-		return view( 'threads.index', compact( 'threads' ) );
+		$trending = array_map( 'json_decode', Redis::zrevrange( 'trending_threads', 0, 4 ) );
+
+		return view( 'threads.index', compact( 'threads', 'trending' ) );
 	}
 
 	/**
@@ -59,7 +62,7 @@ class ThreadsController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store( Request $request)
+	public function store( Request $request )
 	{
 		request()->validate( [
 			'title'      => 'required|spamfree',
@@ -91,6 +94,11 @@ class ThreadsController extends Controller
 		if ( auth()->check() ) {
 			auth()->user()->read( $thread );
 		}
+
+		Redis::zincrby( 'trending_threads', 1, json_encode( [
+			'title' => $thread->title,
+			'path'  => $thread->path()
+		] ) );
 
 		return view( 'threads.show', compact( 'thread' ) );
 	}
@@ -155,7 +163,7 @@ class ThreadsController extends Controller
 			$threads->where( 'channel_id', $channel->id );
 		}
 
-		$threads = $threads->paginate(15);
+		$threads = $threads->paginate( 15 );
 
 		return $threads;
 	}
