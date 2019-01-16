@@ -19,6 +19,7 @@ $factory->define( App\User::class, function ( Faker $faker ) {
 		'email'          => $faker->unique()->safeEmail,
 		'password'       => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
 		'remember_token' => str_random( 10 ),
+		'confirmed'      => false
 	];
 } );
 
@@ -31,7 +32,7 @@ $factory->define( App\Thread::class, function ( Faker $faker ) {
 			return factory( 'App\Channel' )->create()->id;
 		},
 		'title'      => $faker->sentence,
-		'visits'      => 0,
+		'visits'     => 0,
 		'body'       => $faker->paragraph
 	];
 } );
@@ -59,12 +60,12 @@ $factory->define( App\Reply::class, function ( Faker $faker ) {
 
 $factory->define( \Illuminate\Notifications\DatabaseNotification::class, function ( Faker $faker ) {
 	return [
-		'id'            => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-		'type'          => 'App\Notifications\ThreadWasUpdated',
-		'notifiable_id' => function () {
-			return auth()->id() ?:factory('App\User')->create()->id;
+		'id'              => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+		'type'            => 'App\Notifications\ThreadWasUpdated',
+		'notifiable_id'   => function () {
+			return auth()->id() ?: factory( 'App\User' )->create()->id;
 		},
 		'notifiable_type' => 'App\User',
-		'data' => ['foo' => 'bar']
+		'data'            => [ 'foo' => 'bar' ]
 	];
 } );

@@ -23,6 +23,14 @@ class CreateThreadsTest extends TestCase
 	}
 
 	/** @test */
+	public function authenticated_users_must_first_confirmtheir_email_address_before_creating_threads()
+	{
+		$this->publishThread()
+		     ->assertRedirect( '/threads' )
+		     ->assertSessionHas( 'flash', 'You must first confirm your email address.' );
+	}
+
+	/** @test */
 	public function an_authenticated_user_can_create_new_forum_thread()
 	{
 		$this->signIn();
@@ -90,7 +98,7 @@ class CreateThreadsTest extends TestCase
 
 		$this->assertDatabaseMissing( 'threads', [ 'id' => $thread->id ] );
 		$this->assertDatabaseMissing( 'replies', [ 'id' => $reply->id ] );
-		$this->assertEquals(0, Activity::count());
+		$this->assertEquals( 0, Activity::count() );
 	}
 
 	public function publishThread( $overrides )
