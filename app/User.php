@@ -33,6 +33,10 @@ class User extends Authenticatable
 		'email'
 	];
 
+	protected $casts = [
+		'confirmed' => 'boolean'
+	];
+
 	public function getRouteKeyName()
 	{
 		return 'name';
