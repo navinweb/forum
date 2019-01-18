@@ -37,5 +37,12 @@ class RegistrationTest extends TestCase
 		$user = User::whereName('JohnDoe')->first();
 
 		$this->assertFalse($user->confirmed);
+		$this->assertNotNull($user->confirmation_token);
+
+		$response = $this->get('register/confirm?token=' .  $user->confirmation_token);
+
+		$this->assertTrue($user->fresh()->confirmed);
+
+		$response->assertRedirect('/threads');
 	}
 }
