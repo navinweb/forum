@@ -7,6 +7,20 @@ We just need you to confirm your email address to prove that you're a human. You
 Confirm Email
 @endcomponent
 
+@component('mail::table')
+| Laravel       | Table         | Example  |
+|:------------- |:-------------:| --------:|
+| Col 2 is      | Centered      | $10      |
+| Col 3 is      | Right-Aligned | $20      |
+| Col 3 is      | Right-Aligned | $20      |
+| Col 3 is      | Right-Aligned | $20      |
+| Col 3 is      | Right-Aligned | $20      |
+@endcomponent
+
+@component('mail::panel')
+This is the panel content.
+@endcomponent
+
 Thanks,<br>
 {{ config('app.name') }}
 @endcomponent
