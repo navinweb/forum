@@ -16,7 +16,7 @@ class ParticipateInThreadTest extends TestCase
 
 		$thread = create( 'App\Thread' );
 
-		$this->post( "/threads/{$thread->channel->slug}/{$thread->id}/replies", [] );
+		$this->post( "/threads/{$thread->channel->slug}/{$thread->slug}/replies", [] );
 	}
 
 	/** @test */
