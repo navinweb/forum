@@ -29,6 +29,9 @@ Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirme
 Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store')->middleware('auth');
 Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy')->middleware('auth');
 
+//Best Reply
+Route::post('/replies/{reply}/best', 'BestRepliesController@store')->name('best-replies.store');
+
 // Replies
 Route::get('/threads/{channel}/{thread}/replies', 'RepliesController@index');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
