@@ -1,5 +1,5 @@
 <template>
-    <div :id="'reply-'+id" class="card">
+    <div :id="'reply-'+id" :class="isBest ? ' card bg-success' : 'card'">
         <div class="card-header">
             <div class="level vertical-center">
                 <h5 class="flex">
@@ -22,17 +22,22 @@
                     <div class="form-group">
                         <textarea class="form-control" v-model="body" required></textarea>
                     </div>
-                    <button class="btn btn-xs btn-primary">Update</button>
-                    <button class="btn btn-xs btn-link" @click="editing = false" type="button">Cancel</button>
+                    <button class="btn btn-sm btn-primary">Update</button>
+                    <button class="btn btn-sm btn-link" @click="editing = false" type="button">Cancel</button>
                 </form>
             </div>
 
             <div v-else v-html="body"></div>
         </div>
 
-        <div class="card-footer level" v-if="canUpdate">
-            <button class="btn btn-xs" @click="editing = true">Edit</button>
-            <button class="btn btn-xs btn-danger" @click="destroy">Delete</button>
+        <div class="card-footer level flex-start">
+            <div v-if="canUpdate">
+                <button class="btn btn-sm mr-2" @click="editing = true">Edit</button>
+                <button class="btn btn-sm btn-danger mr-2" @click="destroy">Delete</button>
+            </div>
+            <button class="btn btn-sm btn-primary mr-2 best-reply-btn" @click="markBestReply" v-show="! isBest">
+                Best Reply?
+            </button>
         </div>
     </div>
 </template>
@@ -49,7 +54,8 @@
 			return {
 				editing: false,
 				id: this.data.id,
-				body: this.data.body
+				body: this.data.body,
+				isBest: false
 			}
 		},
 
@@ -91,6 +97,10 @@
 //				$(this.$el).fadeOut('300', () => {
 //					flash('Reply has been deleted.');
 //				});
+			},
+
+			markBestReply() {
+				this.isBest = true;
 			}
 		}
 	}

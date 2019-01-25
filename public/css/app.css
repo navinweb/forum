@@ -10489,6 +10489,16 @@ body {
   margin: 0;
 }
 
+.flex-start {
+  -webkit-box-pack: start !important;
+      -ms-flex-pack: start !important;
+          justify-content: flex-start !important;
+}
+
+.best-reply-btn {
+  margin-left: auto;
+}
+
 .level {
   display: -webkit-box;
   display: -ms-flexbox;

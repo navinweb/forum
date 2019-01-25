@@ -33,6 +33,7 @@
             <div class="card-footer level">
                 <button class="btn btn-xs" @click="editing = true">Edit</button>
                 <button class="btn btn-xs btn-danger" @click="destroy">Delete</button>
+                <button class="btn btn-xs btn-primary">Best Reply?</button>
             </div>
         @endcan
     </div>

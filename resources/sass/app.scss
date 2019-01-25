@@ -25,6 +25,14 @@ body {
   }
 }
 
+.flex-start {
+  justify-content: flex-start !important;
+}
+
+.best-reply-btn {
+  margin-left: auto;
+}
+
 .level {
   display: flex;
   //align-items: flex-start;
