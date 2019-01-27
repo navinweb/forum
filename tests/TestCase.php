@@ -5,47 +5,53 @@ namespace Tests;
 use App\Exceptions\Handler;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\DB;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+	use CreatesApplication;
 
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->disableExceptionHandling();
-    }
+	protected function setUp()
+	{
+		parent::setUp();
 
-    protected function signIn($user = null)
-    {
-        $user = $user ?: create('App\User');
-        $this->actingAs($user);
+		DB::statement( 'PRAGMA foreign_keys=on' );
 
-        return $this;
-    }
+		$this->disableExceptionHandling();
+	}
 
-    protected function disableExceptionHandling()
-    {
-        $this->oldExceptionHandler = $this->app->make(ExceptionHandler::class);
-        $this->app->instance(ExceptionHandler::class, new class extends Handler
-        {
-            public function __construct()
-            {}
+	protected function signIn( $user = null )
+	{
+		$user = $user ?: create( 'App\User' );
+		$this->actingAs( $user );
 
-            public function report(\Exception $e)
-            {}
+		return $this;
+	}
 
-            public function render($request, \Exception $e)
-            {
-                throw $e;
-            }
-        });
-    }
+	protected function disableExceptionHandling()
+	{
+		$this->oldExceptionHandler = $this->app->make( ExceptionHandler::class );
+		$this->app->instance( ExceptionHandler::class, new class extends Handler
+		{
+			public function __construct()
+			{
+			}
 
-    protected function withExceptionHandling()
-    {
-        $this->app->instance(ExceptionHandler::class, $this->oldExceptionHandler);
+			public function report( \Exception $e )
+			{
+			}
 
-        return $this;
-    }
+			public function render( $request, \Exception $e )
+			{
+				throw $e;
+			}
+		} );
+	}
+
+	protected function withExceptionHandling()
+	{
+		$this->app->instance( ExceptionHandler::class, $this->oldExceptionHandler );
+
+		return $this;
+	}
 }
