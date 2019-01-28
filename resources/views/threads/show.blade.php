@@ -5,14 +5,15 @@
 @endsection
 
 @section('content')
-    <thread-view :initial-replies-count="{{ $thread->replies_count }}" inline-template>
+    <thread-view :data-replies-count="{{ $thread->replies_count }}" :data-locked="{{$thread->locked}}" inline-template>
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
                             <div class="level">
-                                <img src="{{asset($thread->creator->avatar_path)}}" alt="{{$thread->creator->name}}" width="25" height="25" class="mr-1">
+                                <img src="{{asset($thread->creator->avatar_path)}}" alt="{{$thread->creator->name}}"
+                                     width="25" height="25" class="mr-1">
                                 <span class="flex">
                                     <a href="/profiles/{{$thread->creator->name}}">{{ $thread->creator->name }}</a> posted:
                                     <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
@@ -52,7 +53,12 @@
 
                                 <p>
                                     <subscribe-button
-                                            :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
+                                            :active="{{ json_encode($thread->isSubscribedTo) }}"
+                                            v-if="signedIn"></subscribe-button>
+
+                                    <button class="btn btn-default" v-if="authorize('isAdmin') && ! locked"
+                                            @click="locked = true">Lock
+                                    </button>
                                 </p>
                             </article>
                         </div>
