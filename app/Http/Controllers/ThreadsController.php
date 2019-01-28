@@ -79,8 +79,8 @@ class ThreadsController extends Controller
 			'body'       => request( 'body' )
 		] );
 
-		if(request()->wantsJson()) {
-			return response($thread, 201);
+		if ( request()->wantsJson() ) {
+			return response( $thread, 201 );
 		}
 
 		return redirect( $thread->path() )
@@ -120,19 +120,6 @@ class ThreadsController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit( Thread $thread )
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request $request
-	 * @param  \App\Thread $thread
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update( Request $request, Thread $thread )
 	{
 		//
 	}
