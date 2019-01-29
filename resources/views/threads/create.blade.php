@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('header')
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -25,12 +29,18 @@
 
                             <div class="form-group">
                                 <label for="title">Title:</label>
-                            <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required>
+                                <input type="text" class="form-control" id="title" name="title"
+                                       value="{{ old('title') }}" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="body">Body:</label>
-                                <textarea name="body" id="body" class="form-control" required>{{ old('body') }}</textarea>
+                                <textarea name="body" id="body" class="form-control"
+                                          required>{{ old('body') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="g-recaptcha" data-sitekey="6LdgeY4UAAAAAHQvre0aSWfgdNJdFoWgFfY3DkVo"></div>
                             </div>
 
                             <div class="form-group">
