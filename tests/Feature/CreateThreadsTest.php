@@ -109,6 +109,7 @@ class CreateThreadsTest extends TestCase
 		$this->assertEquals( "foo-title-{$thread['id']}", $thread['slug'] );
 	}
 
+
 	/** @test */
 	public function a_thread_with_a_title_that_ends_in_number_should_generate_the_proper_slug()
 	{
