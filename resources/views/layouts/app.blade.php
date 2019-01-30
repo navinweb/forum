@@ -28,6 +28,11 @@
         [v-cloak] {
             display: none;
         }
+
+        .ais-highlight > em {
+            background-color: yellow;
+            font-style: normal;
+        }
     </style>
 
     @yield('header')

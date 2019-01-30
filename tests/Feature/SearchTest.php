@@ -22,7 +22,7 @@ class SearchTest extends TestCase
 		create( 'App\Thread', [ 'body' => "A thread with the foobar term." ], 2 );
 
 		do {
-			sleep(.25);
+			sleep(.50);
 
 			$results = $this->getJson( "/threads/search?q=foobar" )->json()['data'];
 		} while ( empty( $results ) );
