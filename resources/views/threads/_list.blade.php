@@ -28,11 +28,10 @@
         </div>
         <div class="card-body">
             <article>
-                <div class="body">{{ $thread->body }}</div>
+                <div class="body">{!!  $thread->body  !!}</div>
             </article>
         </div>
         <div class="card-footer">
-{{--            {{ $thread->visits()->count() }} Visits--}}
             {{ $thread->visits }} Visits
         </div>
     </div>

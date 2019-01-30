@@ -65519,29 +65519,23 @@ var render = function() {
         _vm.editing
           ? _c("div", [
               _c("form", { on: { submit: _vm.update } }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("wysiwyg", {
+                      attrs: { name: "body" },
+                      model: {
                         value: _vm.body,
+                        callback: function($$v) {
+                          _vm.body = $$v
+                        },
                         expression: "body"
                       }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { required: "" },
-                    domProps: { value: _vm.body },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.body = $event.target.value
-                      }
-                    }
-                  })
-                ]),
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _c("button", { staticClass: "btn btn-sm btn-primary" }, [
                   _vm._v("Update")
@@ -65703,10 +65697,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -65714,12 +65704,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			body: ''
+			body: '',
+			completed: false
 		};
 	},
 	mounted: function mounted() {
 		$('#body').atwho({
-			at: '@',
+			at: "@",
 			delay: 750,
 			callbacks: {
 				remoteFilter: function remoteFilter(query, callback) {
@@ -65736,16 +65727,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		addReply: function addReply() {
 			var _this = this;
 
-			axios.post(location.pathname + '/replies', {
-				body: this.body
-			}).catch(function (error) {
+			axios.post(location.pathname + '/replies', { body: this.body }).catch(function (error) {
 				flash(error.response.data, 'danger');
 			}).then(function (_ref) {
 				var data = _ref.data;
 
 				_this.body = '';
+				_this.completed = true;
 
-				flash('Your Reply has been posted.');
+				flash('Your reply has been posted.');
 
 				_this.$emit('created', data);
 			});
@@ -67429,35 +67419,27 @@ var render = function() {
   return _c("div", [
     _vm.signedIn
       ? _c("div", [
-          _c("div", { staticClass: "form-group" }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("wysiwyg", {
+                attrs: {
+                  name: "body",
+                  placeholder: "Have something to say?",
+                  shouldClear: _vm.completed
+                },
+                model: {
                   value: _vm.body,
+                  callback: function($$v) {
+                    _vm.body = $$v
+                  },
                   expression: "body"
                 }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                name: "body",
-                id: "body",
-                placeholder: "Body",
-                rows: "5",
-                required: ""
-              },
-              domProps: { value: _vm.body },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.body = $event.target.value
-                }
-              }
-            })
-          ]),
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "button",
@@ -67466,13 +67448,13 @@ var render = function() {
               attrs: { type: "submit" },
               on: { click: _vm.addReply }
             },
-            [_vm._v("Post\n        ")]
+            [_vm._v("Post")]
           )
         ])
       : _c("p", { staticClass: "text-center" }, [
-          _vm._v("Please "),
+          _vm._v("\n        Please "),
           _c("a", { attrs: { href: "/login" } }, [_vm._v("sign in")]),
-          _vm._v(" to participate in this\n        discussion.")
+          _vm._v(" to participate in this\n        discussion.\n    ")
         ])
   ])
 }
@@ -91378,17 +91360,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['name', 'value'],
+	props: ['name', 'value', 'placeholder', 'shouldClear'],
+	mounted: function mounted() {
+		var _this = this;
 
-    mounted: function mounted() {
-        var _this = this;
-
-        this.$refs.trix.addEventListener('trix-change', function (e) {
-            _this.$emit('input', e.target.innerHTML);
-        });
-    }
+		this.$refs.trix.addEventListener('trix-change', function (e) {
+			_this.$emit('input', e.target.innerHTML);
+		});
+		this.$watch('shouldClear', function () {
+			_this.$refs.trix.value = '';
+		});
+	}
 });
 
 /***/ }),
@@ -91407,7 +91390,10 @@ var render = function() {
         domProps: { value: _vm.value }
       }),
       _vm._v(" "),
-      _c("trix-editor", { ref: "trix", attrs: { input: "trix" } })
+      _c("trix-editor", {
+        ref: "trix",
+        attrs: { input: "trix", placeholder: _vm.placeholder }
+      })
     ],
     1
   )
