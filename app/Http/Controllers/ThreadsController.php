@@ -65,7 +65,7 @@ class ThreadsController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Recaptcha $recaptcha )
+	public function store(Request $request,Recaptcha $recaptcha )
 	{
 		request()->validate( [
 			'title'                => 'required|spamfree',

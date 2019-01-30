@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    {{--<script src="https://www.google.com/recaptcha/api.js" async defer></script>--}}
 @endsection
 
 @section('content')
@@ -39,9 +39,9 @@
                                           required>{{ old('body') }}</textarea>
                             </div>
 
-                            <div class="form-group">
-                                <div class="g-recaptcha" data-sitekey="6LdgeY4UAAAAAHQvre0aSWfgdNJdFoWgFfY3DkVo"></div>
-                            </div>
+                            {{--<div class="form-group">--}}
+                                {{--<div class="g-recaptcha" data-sitekey="6LdgeY4UAAAAAHQvre0aSWfgdNJdFoWgFfY3DkVo"></div>--}}
+                            {{--</div>--}}
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Publish</button>
