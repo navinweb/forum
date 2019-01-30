@@ -2,7 +2,7 @@
 <div class="card" v-if="editing">
     <div class="card-header">
         <div class="level">
-            <input type="text" value="{{ $thread->title }}" class="form-control">
+            <input type="text" class="form-control" v-model="form.title">
 
 
         </div>
@@ -10,7 +10,7 @@
 
     <div class="card-body">
         <div class="form-group">
-            <textarea class="form-control" rows="10">{{ $thread->body }}</textarea>
+            <textarea class="form-control" rows="10" v-model="form.body"></textarea>
         </div>
     </div>
 
@@ -19,7 +19,7 @@
             <div class="btn-group-sm">
                 <button class="btn btn-sm btn-primary" @click="update" v-show="editing">Update</button>
                 <button class="btn btn-sm btn-dark" @click="editing = true" v-show="! editing">Edit</button>
-                <button class="btn btn-sm btn-outline-dark" @click="editing = false">Cancel</button>
+                <button class="btn btn-sm btn-outline-dark" @click="resetForm">Cancel</button>
             </div>
 
             @can('update', $thread)
@@ -43,18 +43,14 @@
 
             <span class="flex">
                 <a href="/profiles/{{$thread->creator->name}}">{{ $thread->creator->name }}</a> posted:
-                <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
+                <a href="{{ $thread->path() }}" v-text="title"></a>
             </span>
         </div>
     </div>
 
-    <div class="card-body">
-        <article>
-            <div class="body">{{ $thread->body }}</div>
-        </article>
-    </div>
+    <div class="card-body" v-text="body"></div>
 
-    <div class="card-footer">
+    <div class="card-footer" v-if="authorize('owns', thread)">
         <button class="btn btn-sm btn-dark" @click="editing = true">Edit</button>
     </div>
 </div>
